@@ -3,7 +3,8 @@ from contato import Contato
 
 #------------------------------------------------------------------------------
 # Inicializa a conexão com o banco de dados
-con = sqlite3.connect("sqlite-01.sqlite")
+# con = sqlite3.connect("banco-de-dados.sqlite")
+con = sqlite3.connect(":memory:")
 
 
 #------------------------------------------------------------------------------
@@ -18,29 +19,29 @@ cursor = con.cursor()
 
 #------------------------------------------------------------------------------
 # Cria a tabela "tb_contatos"
-# cursor.execute("""
-#         CREATE TABLE tb_contatos (
-#             id INTEGER PRIMARY KEY,
-#             nome TEXT,
-#             telefone TEXT,
-#             cidade TEXT
-#         );
-#     """)
-# con.commit()
+cursor.execute("""
+        CREATE TABLE tb_contatos (
+                                id INTEGER PRIMARY KEY,
+                                nome TEXT,
+                                telefone TEXT,
+                                cidade TEXT
+                                );
+                            """)
+con.commit()
 
 
 #------------------------------------------------------------------------------
 # Insere os valores da lista "contatos" na tabela "tb_contatos" usando qmarks
-# contatos = [
-#     ("Everton", "99999-9999", "Blumenau"),
-#     ("Priscila", "88888-8888", "São João"),
-#     ("Maria", "98888-7777", "Brusque")
-# ]
-# cursor.executemany("INSERT INTO tb_contatos (nome, telefone, cidade) VALUES (?, ?, ?);", contatos)
-# con.commit()
+contatos = [
+    ("Everton", "99999-9999", "Blumenau"),
+    ("Priscila", "88888-8888", "São João"),
+    ("Maria", "98888-7777", "Brusque")
+]
+cursor.executemany("INSERT INTO tb_contatos (nome, telefone, cidade) VALUES (?, ?, ?);", contatos)
+con.commit()
 
 
-cursor.execute("SELECT * FROM tb_contatos;")
+# cursor.execute("SELECT * FROM tb_contatos;")
 cursor.execute("SELECT * FROM tb_contatos WHERE cidade='Blumenau';")
 pessoas = cursor.fetchall()
 
