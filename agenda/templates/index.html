@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Agenda de contatos</title>
+    <style>
+        table, th, td {
+            border: solid 1px black;
+        }
+    </style>
+</head>
+<body>
+    <div class="titulo">
+        <p>Agenda de contatos</p>
+    </div>
+
+    <div class="telefones">
+        <table>
+            <tr>
+                <th>Nome</th>
+                <th>Telefone</th>
+                <th>Cidade</th>
+            </tr>
+
+            {% for contato in agenda %}
+                <tr>
+                    <td>{{ contato[0] }}</td>
+                    <td>{{ contato[1] }}</td>
+                    <td>{{ contato[2] }}</td>
+                    <td>
+                        <a href="#">Apagar</a>
+                    </td>
+                </tr>
+            {% endfor %}
+
+        </table>
+    </div>
+</body>
+</html>

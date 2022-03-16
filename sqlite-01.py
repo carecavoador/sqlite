@@ -3,13 +3,13 @@ from contato import Contato
 
 #------------------------------------------------------------------------------
 # Inicializa a conexão com o banco de dados
-# con = sqlite3.connect("banco-de-dados.sqlite")
-con = sqlite3.connect(":memory:")
+banco = sqlite3.connect("banco-de-dados.sqlite")
+# banco = sqlite3.connect(":memory:")
 
 
 #------------------------------------------------------------------------------
 # Cursor para executar os comandos SQL
-cursor = con.cursor()
+cursor = banco.cursor()
 
 
 #------------------------------------------------------------------------------
@@ -27,7 +27,7 @@ cursor.execute("""
                                 cidade TEXT
                                 );
                             """)
-con.commit()
+banco.commit()
 
 
 #------------------------------------------------------------------------------
@@ -37,8 +37,9 @@ contatos = [
     ("Priscila", "88888-8888", "São João"),
     ("Maria", "98888-7777", "Brusque")
 ]
+
 cursor.executemany("INSERT INTO tb_contatos (nome, telefone, cidade) VALUES (?, ?, ?);", contatos)
-con.commit()
+banco.commit()
 
 
 # cursor.execute("SELECT * FROM tb_contatos;")
@@ -52,4 +53,4 @@ for contato in contatos:
 
 #------------------------------------------------------------------------------
 # Antes de encerrar, termina a conexão com o bando de dados
-con.close()
+banco.close()
