@@ -1,4 +1,5 @@
 from flask import Flask, render_template, redirect
+from flask_sqlalchemy import SQLAlchemy
 
 nomes = [
     ("Everton", "99999-9999", "Blumenau"),
@@ -9,6 +10,14 @@ nomes = [
 
 # Flask App >------------------------------------------------------------------
 app = Flask(__name__)
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///agenda.sqlite"
+db = SQLAlchemy(app)
+
+class Contato(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	nome = db.Column(db.String, nullable=False)
+	telefone = db.Column(db.String, nullable=False)
+	cidade = db.Column(db.String)
 
 
 # Routes >---------------------------------------------------------------------
