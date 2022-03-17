@@ -23,9 +23,9 @@
 
             {% for contato in agenda %}
                 <tr>
-                    <td>{{ contato[0] }}</td>
-                    <td>{{ contato[1] }}</td>
-                    <td>{{ contato[2] }}</td>
+                    <td>{{ contato.nome }}</td>
+                    <td>{{ contato.telefone }}</td>
+                    <td>{{ contato.cidade }}</td>
                     <td>
                         <a href="#">Apagar</a>
                     </td>
