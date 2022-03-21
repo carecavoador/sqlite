@@ -1,16 +1,10 @@
 from flask import Flask, render_template, redirect
 from flask_sqlalchemy import SQLAlchemy
 
-# nomes = [
-#     ("Everton", "99999-9999", "Blumenau"),
-#     ("Priscila", "88888-8888", "São João"),
-#     ("Maria", "98888-7777", "Brusque")
-# ]
-
 
 # Flask App >------------------------------------------------------------------
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///agenda.sqlite"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db/agenda.sqlite"
 db = SQLAlchemy(app)
 
 

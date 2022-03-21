@@ -13,6 +13,7 @@
         <p>Agenda de contatos</p>
     </div>
 
+    <!-- Tabela com a lista de telefones -->
     <div class="telefones">
         <table>
             <tr>
@@ -26,13 +27,14 @@
                     <td>{{ contato.nome }}</td>
                     <td>{{ contato.telefone }}</td>
                     <td>{{ contato.cidade }}</td>
-                    <td>
-                        <a href="#">Apagar</a>
-                    </td>
+                    <td><a href="#">Apagar</a></td>
+                    <td><a href="#">Editar</a></td>
                 </tr>
             {% endfor %}
 
         </table>
     </div>
+    <!-- ---------------------------------- -->
+    
 </body>
 </html>
