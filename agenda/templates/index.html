@@ -2,39 +2,36 @@
 <head>
     <meta charset="UTF-8">
     <title>Agenda de contatos</title>
-    <style>
-        table, th, td {
-            border: solid 1px black;
-        }
-    </style>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="{{ url_for("static", filename="css/bootstrap.css") }}">
 </head>
 <body>
-    <div class="titulo">
-        <p>Agenda de contatos</p>
-    </div>
-
-    <!-- Tabela com a lista de telefones -->
-    <div class="telefones">
-        <table>
-            <tr>
-                <th>Nome</th>
-                <th>Telefone</th>
-                <th>Cidade</th>
-            </tr>
-
-            {% for contato in agenda %}
+    <div class="container-sm">
+        <h3>Agenda de contatos</h3>
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>{{ contato.nome }}</td>
-                    <td>{{ contato.telefone }}</td>
-                    <td>{{ contato.cidade }}</td>
-                    <td><a href="#">Apagar</a></td>
-                    <td><a href="#">Editar</a></td>
+                    <th>Nome</th>
+                    <th>Telefone</th>
+                    <th>Cidade</th>
                 </tr>
-            {% endfor %}
+            </thead>
 
+            <tbody>
+                {% for contato in agenda %}
+                    <tr>
+                        <td>{{ contato.nome }}</td>
+                        <td>{{ contato.telefone }}</td>
+                        <td>{{ contato.cidade }}</td>
+                        <td><a href="#">Apagar</a></td>
+                        <td><a href="#">Editar</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
         </table>
     </div>
-    <!-- ---------------------------------- -->
     
+    <!-- Bootstrap -->
+    <script src="{{ url_for("static", filename="js/bootstrap.js") }}"></script>
 </body>
 </html>

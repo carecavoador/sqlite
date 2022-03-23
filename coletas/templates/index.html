@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Coletas solicitadas</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="{{ url_for("static", filename="css/bootstrap.css") }}">
+</head>
+<body>
+    <div class="container-sm">
+
+        <h3 class="text-center">Coletas</h3>
+
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Nr.</th>
+                    <th>Coletar</th>
+                    <th>Local</th>
+                    <th>Usuário</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for coleta in coletas %}
+                    <tr>
+                        <td>{{ coleta.id }}</td>
+                        <td>{{ coleta.coleta }}</td>
+                        <td>{{ coleta.local }}</td>
+                        <td>{{ coleta.usuario }}</td>
+                        <td>
+                            <form action="/apagar" method="post">
+                                <input type="hidden" name="id_coleta" value="{{ coleta.id }}">
+                                <input type="submit" value="Apagar" class="btn btn-danger">
+                            </form>
+                        </td>
+                        <td><a class="btn btn-primary" href="#">Editar</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <form action="/adicionar" method="post">
+
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default">Nova coleta:</span>
+                <input type="text" name="nova_coleta" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            </div>
+            
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default">Local de coleta:</span>
+                <input type="text" name="novo_local" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default">Usuário:</span>
+                <input type="text" name="novo_usuario" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            </div>
+
+            <button class="btn btn-primary" type="submit">Solicitar Coleta</button>
+
+        </form>
+
+    </div>
+    
+    <!-- Bootstrap -->
+    <script src="{{ url_for("static", filename="js/bootstrap.js") }}"></script>
+</body>
+</html>
