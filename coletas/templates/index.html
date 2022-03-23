@@ -1,69 +1,76 @@
-<!DOCTYPE html>
-<head>
-    <meta charset="UTF-8">
-    <title>Coletas solicitadas</title>
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="{{ url_for("static", filename="css/bootstrap.css") }}">
-</head>
-<body>
-    <div class="container-sm">
+{% extends 'layout.html' %}
 
-        <h3 class="text-center">Coletas</h3>
+{% block head %}
+<title>Solicitação de Coleta</title>
+{% endblock head %}
 
-        <table class="table table-striped table-hover">
-            <thead>
-                <tr>
-                    <th>Nr.</th>
-                    <th>Coletar</th>
-                    <th>Local</th>
-                    <th>Usuário</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for coleta in coletas %}
-                    <tr>
-                        <td>{{ coleta.id }}</td>
-                        <td>{{ coleta.coleta }}</td>
-                        <td>{{ coleta.local }}</td>
-                        <td>{{ coleta.usuario }}</td>
-                        <td>
-                            <form action="/apagar" method="post">
-                                <input type="hidden" name="id_coleta" value="{{ coleta.id }}">
-                                <input type="submit" value="Apagar" class="btn btn-danger">
-                            </form>
-                        </td>
-                        <td><a class="btn btn-primary" href="#">Editar</a></td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+{% block body %}
+<div class="container-sm">
 
-        <form action="/adicionar" method="post">
+    <h3 class="text-center">Coletas</h3>
+    <hr>
 
-            <div class="input-group mb-3">
-                <span class="input-group-text" id="inputGroup-sizing-default">Nova coleta:</span>
-                <input type="text" name="nova_coleta" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-            </div>
-            
-            <div class="input-group mb-3">
-                <span class="input-group-text" id="inputGroup-sizing-default">Local de coleta:</span>
-                <input type="text" name="novo_local" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-            </div>
-
-            <div class="input-group mb-3">
-                <span class="input-group-text" id="inputGroup-sizing-default">Usuário:</span>
-                <input type="text" name="novo_usuario" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-            </div>
-
-            <button class="btn btn-primary" type="submit">Solicitar Coleta</button>
-
-        </form>
-
+    {% if coletas%}
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Coletar o quê?</th>
+                <th>Onde?</th>
+                <th>Quem Solicitou?</th>
+                <th>Quando solicitado?</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for coleta in coletas %}
+            <tr>
+                <td>{{ coleta.coleta }}</td>
+                <td>{{ coleta.local }}</td>
+                <td>{{ coleta.usuario }}</td>
+                <td>{{ coleta.data.strftime("%m/%d/%Y, %H:%M:%S") }}</td>
+                <td>
+                    <div class="acoes">
+                        <a type="submit" class="btn btn-outline-danger" href="/apagar/{{coleta.id}}">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                        <a type="submit" class="btn btn-outline-primary" href="/editar/{{coleta.id}}">
+                            <i class="bi bi-pencil-fill"></i>
+                        </a>
+                    </div>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="alert alert-primary d-flex align-items-center" role="alert">
+        <i class="bi bi-info-circle-fill me-2"></i>
+        <div>Sem coletas para exibir.</div>
     </div>
-    
-    <!-- Bootstrap -->
-    <script src="{{ url_for("static", filename="js/bootstrap.js") }}"></script>
-</body>
-</html>
+    {% endif %}
+
+    <hr>
+    <form action="/adicionar" method="post">
+
+        <div class="input-group mb-3">
+            <span class="input-group-text">Material:</span>
+            <input type="text" name="nova_coleta" class="form-control">
+        </div>
+
+        <div class="input-group mb-3">
+            <span class="input-group-text">Local:</span>
+            <input type="text" name="novo_local" class="form-control">
+        </div>
+
+        <div class="input-group mb-3">
+            <span class="input-group-text">Usuário:</span>
+            <input type="text" name="novo_usuario" class="form-control" value="everton.souza">
+        </div>
+
+        <button class="btn btn-primary" type="submit">Solicitar Coleta</button>
+
+    </form>
+
+</div>
+{% endblock body %}

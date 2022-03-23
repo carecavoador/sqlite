@@ -1,5 +1,6 @@
 from flask import Flask, render_template, redirect, request
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 
 # Flask App >------------------------------------------------------------------
@@ -14,6 +15,7 @@ class Coletas(db.Model):
     coleta = db.Column(db.String, nullable=False)
     local = db.Column(db.String, nullable=False)
     usuario = db.Column(db.String, nullable=False)
+    data = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
         return f"Coleta('{self.id}', '{self.coleta}' em '{self.local}')"
@@ -26,7 +28,7 @@ def index():
     return render_template("index.html", coletas=coletas)
 
 
-@app.route("/adicionar", methods=["POST"])
+@app.route("/adicionar", methods=["GET", "POST"])
 def adicionar():
     coleta = request.form.get("nova_coleta")
     local = request.form.get("novo_local")
@@ -37,13 +39,24 @@ def adicionar():
     return redirect("/")
 
 
-@app.route("/apagar", methods=["POST"])
-def apagar():
-    id_coleta = request.form.get("id_coleta")
+@app.route("/apagar/<int:id_coleta>")
+def apagar(id_coleta):
     apagar_coleta = Coletas.query.filter_by(id=id_coleta).first()
     db.session.delete(apagar_coleta)
     db.session.commit()
     return redirect("/")
+
+
+@app.route("/editar/<int:id_coleta>", methods=["GET", "POST"])
+def editar(id_coleta):
+    editar_coleta = Coletas.query.get_or_404(id_coleta)
+    if request.method == "POST":
+        editar_coleta.coleta = request.form["edita_coleta"]
+        editar_coleta.local = request.form["edita_local"]
+        db.session.commit()
+        return redirect("/")
+    else:
+        return render_template("editar.html", coleta=editar_coleta)
 
 
 # Main >-----------------------------------------------------------------------

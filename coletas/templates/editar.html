@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+
+{% block head %}
+<title>Editar Coleta</title>
+{% endblock head %}
+
+{% block body %}
+<div class="container-sm">
+    <h3 class="text-center">Editar informações da coleta</h3>
+    <hr>
+
+    {% if coleta %}
+    <div class="form">
+        <form action="/editar/{{coleta.id}}" method="post">
+            <table class="table">
+                <tr>
+                    <td>
+                        <input type="text" class="form-control" name="edita_coleta" value="{{coleta.coleta}}">
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" name="edita_local" value="{{coleta.local}}">
+                    </td>
+                    <td>
+                        <input type="submit" value="Atualizar" class="btn btn-primary">
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <a href="/" class="btn btn-danger">Cancelar</a>
+    </div>
+    {% else %}
+    <p>Sem nada para mostrar.</p>
+    {% endif %}
+</div>
+{% endblock body %}
