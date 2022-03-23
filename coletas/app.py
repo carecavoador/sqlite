@@ -1,6 +1,7 @@
-from flask import Flask, render_template, redirect, request
+from flask import Flask, render_template, redirect, request, send_file
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+# from io import StringIO
 
 
 # Flask App >------------------------------------------------------------------
@@ -27,7 +28,6 @@ def index():
     coletas = [coleta for coleta in Coletas.query.all()]
     return render_template("index.html", coletas=coletas)
 
-
 @app.route("/adicionar", methods=["GET", "POST"])
 def adicionar():
     coleta = request.form.get("nova_coleta")
@@ -38,14 +38,12 @@ def adicionar():
     db.session.commit()
     return redirect("/")
 
-
 @app.route("/apagar/<int:id_coleta>")
 def apagar(id_coleta):
     apagar_coleta = Coletas.query.filter_by(id=id_coleta).first()
     db.session.delete(apagar_coleta)
     db.session.commit()
     return redirect("/")
-
 
 @app.route("/editar/<int:id_coleta>", methods=["GET", "POST"])
 def editar(id_coleta):
@@ -57,6 +55,18 @@ def editar(id_coleta):
         return redirect("/")
     else:
         return render_template("editar.html", coleta=editar_coleta)
+
+# @app.route("/envia")
+# def envia():
+#     coletas = [coleta for coleta in Coletas.query.all()]
+#     strIO = StringIO()
+#     strIO.write(render_template("index.html", coletas=coletas))
+#     strIO.seek(0)
+#     with open('teste.txt', 'w') as arquivo:
+#         buffer = strIO.getvalue()
+#         buffer.encode('utf8')
+#         arquivo.write(buffer)
+#     return redirect("/")
 
 
 # Main >-----------------------------------------------------------------------
